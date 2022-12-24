@@ -23,6 +23,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.1",
+    "prop-types": "^15.8.1",
     "sass": "^1.57.1"
   },
   "name": "crew_meister_challenge",
