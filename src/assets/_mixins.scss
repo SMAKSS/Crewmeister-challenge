@@ -1,11 +1,12 @@
 // Here lies the common scss mixins
 
-@mixin flex($align: null, $justify: null, $dir: null, $flex: null) {
+@mixin flex($align: null, $justify: null, $dir: null, $flex: null, $gap: null) {
   display: flex;
   align-items: $align;
   justify-content: $justify;
   flex-direction: $dir;
   flex: $flex;
+  gap: $gap;
 }
 
 @mixin unselectable() {

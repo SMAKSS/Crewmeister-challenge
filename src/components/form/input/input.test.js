@@ -13,7 +13,6 @@ function renderInput(onChange) {
     <Input
       id="search"
       type="text"
-      label="test-input"
       value="Mike"
       icon={<span />}
       secondaryIcon={<span />}
@@ -30,7 +29,6 @@ test('Creating input', () => {
   expect(view).toBeInTheDocument()
   expect(view.value).toBe('Mike')
   expect(view.type).toBe('text')
-  expect(view.labels[0].textContent).toBe('test-input')
 })
 
 test('Input onchange event', () => {

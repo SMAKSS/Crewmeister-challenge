@@ -1,0 +1,25 @@
+@use 'assets/mixins';
+
+.container {
+  @include mixins.flex($align: center, $justify: space-between, $gap: 12px);
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
+
+  & .first {
+    @include mixins.flex($align: center, $justify: flex-start, $gap: 12px);
+
+    & > div {
+      @media (max-width: 767px) {
+        width: 100%;
+      }
+
+      &:first-child {
+        @media (max-width: 767px) {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+  }
+}

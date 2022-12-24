@@ -1,0 +1,121 @@
+// Here lies the main styles for the application
+
+@use 'assets/variables';
+@use 'assets/mixins';
+
+html {
+  font-size: 10px;
+  line-height: 1.15;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: variables.$font;
+  background-color: variables.$background;
+  transition: background-color 0.3s;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+*,
+*:before,
+*:after {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+[aria-hidden='true'] {
+  pointer-events: none;
+}
+
+input {
+  overflow: visible;
+
+  -webkit-tap-highlight-color: transparent;
+
+  &[type='date'] {
+    padding: 1.4rem 2rem 1.4rem 2rem;
+  }
+}
+
+select {
+  text-transform: none;
+}
+
+input:not([type='checkbox']):not([type='date']),
+select {
+  font-family: inherit;
+  font-size: 1.2rem;
+  line-height: 1.15;
+  margin: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+input,
+select {
+  font-family: inherit;
+  outline: none;
+  width: 100%;
+  height: 3.6rem;
+  border: 1px solid variables.$main-border;
+  border-radius: 0.5rem;
+  padding: 1.4rem 3.2rem 1.4rem 2rem;
+  font-size: 1.4rem;
+  display: block;
+
+  &:focus {
+    border-color: variables.$secondary-main;
+  }
+
+  &:invalid:focus {
+    border-color: variables.$error;
+  }
+
+  &::placeholder {
+    color: variables.$hint;
+    font-size: 1.4rem;
+  }
+
+  &.reverse-direction {
+    direction: ltr;
+  }
+}
+
+#root {
+  @include mixins.flex(center, flex-start, column);
+  height: 100%;
+  width: 100%;
+  position: relative;
+  min-height: 30rem;
+}
+
+#root
+  > div:not(.modal-container):not(.snack-bar):not([class*='loadingSpinner']),
+#root > table {
+  width: 80%;
+  margin: 2em auto 0;
+}
+
+.unselectable {
+  @include mixins.unselectable();
+}
+
+.fade-in {
+  opacity: 1;
+  visibility: inherit;
+  transition: 0.5s;
+}
+
+.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s;
+}

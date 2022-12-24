@@ -1,0 +1,83 @@
+// Here lies styles related to Table.js
+
+@use 'assets/variables';
+@use 'assets/mixins';
+
+.container {
+  table-layout: fixed;
+}
+
+.head {
+  font: 500 1.2rem/3 variables.$font;
+  color: variables.$background;
+  background: variables.$secondary-main;
+
+  & th {
+    @include mixins.unselectable();
+
+    // width: 6rem;
+
+    &:not([data-name='#']):not([data-name*='note']) {
+      cursor: pointer;
+    }
+  }
+}
+
+.body {
+  font-size: 1.4rem;
+  text-align: center;
+
+  & tr {
+    &:nth-child(2n + 1) {
+      background: variables.$footer;
+    }
+
+    &:nth-child(2n) {
+      background: variables.$main-border;
+    }
+  }
+
+  & td:not(:first-child) {
+    padding: 5px 8px;
+  }
+
+  & td.member {
+    @include mixins.flex($align: center, $gap: 8px);
+
+    img {
+      width: 20px;
+      height: 20px;
+
+      object-fit: cover;
+
+      border-radius: 50%;
+    }
+  }
+
+  & .empty {
+    font-weight: 600;
+    line-height: 40rem;
+  }
+}
+
+.no_cell {
+  position: relative;
+
+  & .form-group {
+    margin: 1rem 0;
+  }
+
+  & input {
+    height: auto;
+    width: auto;
+    padding: 0;
+  }
+
+  & span {
+    line-height: 1;
+
+    position: absolute;
+    top: 0;
+    right: 0.3rem;
+  }
+}

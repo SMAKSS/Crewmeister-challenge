@@ -12,7 +12,6 @@ function renderSelect(onChange) {
   render(
     <Select
       id="search"
-      label="test-select"
       value="option-one"
       icon={<span />}
       secondaryIcon={<span />}
@@ -33,7 +32,6 @@ test('Creating select', () => {
 
   expect(view).toBeInTheDocument()
   expect(view.value).toBe('option-one')
-  expect(view.labels[0].textContent).toBe('test-select')
 })
 
 test('Select onchange event', () => {
@@ -49,5 +47,5 @@ test('Select disabled option', () => {
 
   expect(onChange).toHaveBeenCalledTimes(1)
   expect(view.value).toBe('option-one')
-  expect(view.options[2]).toHaveAttribute('disabled')
+  expect(view.options[3]).toHaveAttribute('disabled')
 })

@@ -5,7 +5,6 @@ import style from '../formGroup.module.scss'
 /**
  *
  * @param {Object} props
- * @param {String} props.label - select label
  * @param {HTMLElement} props.icon - main icon
  * @param {HTMLElement} props.secondaryIcon - secondary icon
  * @param {Function} props.secondaryIconOnClick - secondary icon handler
@@ -19,7 +18,6 @@ import style from '../formGroup.module.scss'
  * @returns {ReactElement} This function is responsible for select component.
  */
 function Select({
-  label = '',
   icon = null,
   secondaryIcon = null,
   secondaryIconOnClick = null,
@@ -42,6 +40,9 @@ function Select({
         value={value}
         {...props}
       >
+        <option value="" disabled={true}>
+          {`Choose a ${name}`}
+        </option>
         {options.map(option => (
           <option
             key={option.key}
@@ -52,7 +53,6 @@ function Select({
           </option>
         ))}
       </select>
-      {label && <label htmlFor={id}>{label}</label>}
       {secondaryIcon && (
         <span
           className={`${style.secondary_icon} ${style.arrow}`}
@@ -68,7 +68,6 @@ function Select({
 export default Select
 
 Select.propTypes = {
-  label: PropTypes.string,
   icon: PropTypes.node,
   secondaryIcon: PropTypes.node,
   secondaryIconOnClick: PropTypes.func,
