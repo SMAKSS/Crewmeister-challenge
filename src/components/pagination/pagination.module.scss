@@ -1,0 +1,19 @@
+@use 'assets/mixins';
+
+.list {
+  @include mixins.flex($align: center, $gap: 12px);
+
+  list-style: none;
+
+  & .item {
+    font-size: 1.4rem;
+
+    &.active {
+      text-decoration: underline;
+    }
+
+    & .link {
+      cursor: pointer;
+    }
+  }
+}
