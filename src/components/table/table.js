@@ -191,7 +191,7 @@ function Table({
                       type="checkbox"
                       name={row.id}
                       id={row.id}
-                      checked={selectedRows[row.id]}
+                      checked={selectedRows[row.id] ?? false}
                       onChange={e => checkBoxHandler(e)}
                     />
                     <span>{index + 1}</span>
