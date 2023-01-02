@@ -1,0 +1,35 @@
+name: CI workflow
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened]
+    branches:
+      - master
+
+jobs:
+  ci:
+    name: lint and test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js Environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run linters
+        run: yarn lint
+
+      - name: Run prettier
+        run: yarn format
+
+      - name: Run jest tests
+        run: yarn test
