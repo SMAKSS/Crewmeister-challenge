@@ -19,6 +19,8 @@
 
   transition: background 0.2s cubic-bezier(1, 0, 0, 1), color 0.2s;
 
+  cursor: pointer;
+
   &[disabled] {
     pointer-events: none;
   }

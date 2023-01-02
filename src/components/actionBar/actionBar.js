@@ -1,9 +1,12 @@
 import {useEffect, Suspense, useContext} from 'react'
 import PropTypes from 'prop-types'
+import {createEvent} from 'ics'
+import {saveAs} from 'file-saver'
 
 import {SelectRowContext} from 'contexts'
 import {DataTableContext} from 'screens/dataTable/dataTableContext'
 import {Input, Select, Clear, Button} from 'components'
+import {convertToICalEvent} from 'utils'
 
 import style from './actionBar.module.scss'
 
@@ -21,6 +24,27 @@ function ActionBar({fetchData, selectOptions, setFilter}) {
   const {typeState, dateState} = useContext(DataTableContext)
   const [type, setType] = typeState
   const [date, setDate] = dateState
+
+  const createICal = () => {
+    function iCalEvent(event) {
+      createEvent(event, (error, value) => {
+        if (error) {
+          console.error(error)
+          return
+        }
+
+        const blob = new Blob([value], {type: 'text/plain;charset=utf-8'})
+        saveAs(
+          blob,
+          `absences-${event.organizer.name}-${event.description}.ics`,
+        )
+      })
+    }
+
+    Object.values(selectedRows).forEach(row =>
+      iCalEvent(convertToICalEvent(row)),
+    )
+  }
 
   /**
    * This useEffect is responsible for executing type change with debouncing.
@@ -112,6 +136,7 @@ function ActionBar({fetchData, selectOptions, setFilter}) {
       </div>
       <div className={style.last}>
         <Button
+          onClick={() => createICal()}
           disabled={!Object.keys(selectedRows).length}
           text="Convert to iCal"
         />
