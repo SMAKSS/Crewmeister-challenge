@@ -164,6 +164,7 @@ function DataTable() {
           rows={currentRecords}
           message={errorMessage}
         />
+        <div>{`Total number of absences: ${allData.length}`}</div>
         <Pagination
           nPages={nPages}
           currentPage={currentPage}

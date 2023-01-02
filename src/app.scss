@@ -101,6 +101,10 @@ select {
 #root > header {
   width: 85%;
   margin: 2em auto 0;
+
+  & table {
+    width: 100%;
+  }
 }
 
 .unselectable {

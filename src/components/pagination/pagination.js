@@ -1,3 +1,4 @@
+import {useEffect} from 'react'
 import PropTypes from 'prop-types'
 
 import style from './pagination.module.scss'
@@ -21,6 +22,10 @@ function Pagination({nPages, currentPage, setCurrentPage, ...rest}) {
   const prevPage = () => {
     if (currentPage !== 1) setCurrentPage(currentPage - 1)
   }
+
+  useEffect(() => {
+    if (currentPage > nPages) setCurrentPage(nPages + 1)
+  }, [currentPage, nPages, setCurrentPage])
 
   return (
     <footer {...rest}>
