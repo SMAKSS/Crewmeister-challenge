@@ -1,8 +1,9 @@
 import {useEffect, Suspense, useContext} from 'react'
 import PropTypes from 'prop-types'
 
+import {SelectRowContext} from 'contexts'
 import {DataTableContext} from 'screens/dataTable/dataTableContext'
-import {Input, Select, Clear} from 'components'
+import {Input, Select, Clear, Button} from 'components'
 
 import style from './actionBar.module.scss'
 
@@ -16,6 +17,7 @@ import style from './actionBar.module.scss'
  * @returns {ReactElement}
  */
 function ActionBar({fetchData, selectOptions, setFilter}) {
+  const [selectedRows] = useContext(SelectRowContext)
   const {typeState, dateState} = useContext(DataTableContext)
   const [type, setType] = typeState
   const [date, setDate] = dateState
@@ -28,7 +30,7 @@ function ActionBar({fetchData, selectOptions, setFilter}) {
 
     if (!timeout)
       setTimeout(() => {
-        const data = fetchData()
+        const data = fetchData
 
         setFilter(data.filter(datum => type === datum.type))
 
@@ -36,7 +38,7 @@ function ActionBar({fetchData, selectOptions, setFilter}) {
       }, 0)
 
     return () => clearTimeout(timeout)
-  }, [fetchData, setFilter, type])
+  }, [fetchData, setDate, setFilter, type])
 
   /**
    * This useEffect is responsible for executing date change with debouncing.
@@ -46,7 +48,7 @@ function ActionBar({fetchData, selectOptions, setFilter}) {
 
     if (!timeout)
       setTimeout(() => {
-        const data = fetchData()
+        const data = fetchData
 
         setFilter(
           data.filter(
@@ -58,7 +60,7 @@ function ActionBar({fetchData, selectOptions, setFilter}) {
       }, 0)
 
     return () => clearTimeout(timeout)
-  }, [date, fetchData, setFilter])
+  }, [date, fetchData, setFilter, setType])
 
   /**
    *
@@ -77,7 +79,7 @@ function ActionBar({fetchData, selectOptions, setFilter}) {
   }
 
   return (
-    <div className={style.container}>
+    <header className={style.container}>
       <div className={style.first}>
         <Select
           value={type}
@@ -108,7 +110,13 @@ function ActionBar({fetchData, selectOptions, setFilter}) {
           }}
         />
       </div>
-    </div>
+      <div className={style.last}>
+        <Button
+          disabled={!Object.keys(selectedRows).length}
+          text="Convert to iCal"
+        />
+      </div>
+    </header>
   )
 }
 

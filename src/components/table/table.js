@@ -138,78 +138,77 @@ function Table({
   }, [check, checkHandler, rows])
 
   return (
-    <table className={style.container}>
-      <thead className={style.head}>
-        <tr ref={headerRef}>
-          {headers.map((header, index) => (
-            <th
-              style={!header.name.includes('note') ? {width: '10rem'} : {}}
-              key={`${header.name}-${index}`}
-              data-name={header.name}
-              onClick={
-                header.name !== NUMBER && !header.name.includes('note')
-                  ? e => {
-                      sortHandler(e)
-                    }
-                  : null
-              }
-            >
-              {index === 0 ? (
-                <div className={style.no_cell}>
-                  <Input
-                    type="checkbox"
-                    title=""
-                    checked={check}
-                    onChange={() => setCheck(prevState => !prevState)}
-                  />
-                  <span>{header.name}</span>
-                </div>
-              ) : header.name !== NUMBER && !header.name.includes('note') ? (
-                <>
-                  {header.name}
-                  <span data-name={`sort_${header.name}`} />
-                </>
-              ) : (
-                header.name
-              )}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody className={style.body}>
-        {rows.length === 0 ? (
-          <tr className={`${style.empty} unselectable`}>
-            <td colSpan={headers.length}>{message}</td>
+    <main>
+      <table className={style.container}>
+        <thead className={style.head}>
+          <tr ref={headerRef}>
+            {headers.map((header, index) => (
+              <th
+                style={!header.name.includes('note') ? {width: '10rem'} : {}}
+                key={`${header.name}-${index}`}
+                data-name={header.name}
+                onClick={
+                  header.name !== NUMBER && !header.name.includes('note')
+                    ? e => {
+                        sortHandler(e)
+                      }
+                    : null
+                }
+              >
+                {index === 0 ? (
+                  <div className={style.no_cell}>
+                    <Input
+                      type="checkbox"
+                      title=""
+                      checked={check}
+                      onChange={() => setCheck(prevState => !prevState)}
+                    />
+                    <span>{header.name}</span>
+                  </div>
+                ) : header.name !== NUMBER && !header.name.includes('note') ? (
+                  <>
+                    {header.name}
+                    <span data-name={`sort_${header.name}`} />
+                  </>
+                ) : (
+                  header.name
+                )}
+              </th>
+            ))}
           </tr>
-        ) : (
-          rows.map((row, index) => (
-            <tr key={row.id}>
-              <td>
-                <div className={style.no_cell}>
-                  <Input
-                    type="checkbox"
-                    name={row.id}
-                    id={row.id}
-                    checked={selectedRows[row.id]}
-                    onChange={e => checkBoxHandler(e)}
-                  />
-                  <span>{index + 1}</span>
-                </div>
-              </td>
-              <td className={style.member}>
-                {row.img ? <img src={row.img} alt={row.name} /> : null}
-                <span>{row.name}</span>
-              </td>
-              <td>{row.type}</td>
-              <td>{row.period}</td>
-              <td>{row.memberNote || '-'}</td>
-              <td>{row.admitterNote || '-'}</td>
-              <td>{row.status}</td>
+        </thead>
+        <tbody className={style.body}>
+          {rows.length === 0 ? (
+            <tr className={`${style.empty} unselectable`}>
+              <td colSpan={headers.length}>{message}</td>
             </tr>
-          ))
-        )}
-      </tbody>
-    </table>
+          ) : (
+            rows.map((row, index) => (
+              <tr key={row.id}>
+                <td>
+                  <div className={style.no_cell}>
+                    <Input
+                      type="checkbox"
+                      name={row.id}
+                      id={row.id}
+                      checked={selectedRows[row.id]}
+                      onChange={e => checkBoxHandler(e)}
+                    />
+                    <span>{index + 1}</span>
+                  </div>
+                </td>
+                <td>{row.name}</td>
+                <td>{row.type}</td>
+                <td>{row.period}</td>
+                <td>{row.memberNote || '-'}</td>
+                <td>{row.admitterNote || '-'}</td>
+                <td>{row.status}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </main>
   )
 }
 

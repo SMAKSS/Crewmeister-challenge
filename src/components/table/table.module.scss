@@ -41,19 +41,6 @@
     padding: 5px 8px;
   }
 
-  & td.member {
-    @include mixins.flex($align: center, $gap: 8px);
-
-    img {
-      width: 20px;
-      height: 20px;
-
-      object-fit: cover;
-
-      border-radius: 50%;
-    }
-  }
-
   & .empty {
     font-weight: 600;
     line-height: 40rem;

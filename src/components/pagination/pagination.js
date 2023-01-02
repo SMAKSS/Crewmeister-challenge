@@ -23,7 +23,7 @@ function Pagination({nPages, currentPage, setCurrentPage, ...rest}) {
   }
 
   return (
-    <nav {...rest}>
+    <footer {...rest}>
       <ul className={style.list}>
         <li className={style.item}>
           <span className={style.link} onClick={prevPage}>
@@ -51,7 +51,7 @@ function Pagination({nPages, currentPage, setCurrentPage, ...rest}) {
           </span>
         </li>
       </ul>
-    </nav>
+    </footer>
   )
 }
 

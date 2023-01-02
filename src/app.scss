@@ -97,10 +97,9 @@ select {
   min-height: 30rem;
 }
 
-#root
-  > div:not(.modal-container):not(.snack-bar):not([class*='loadingSpinner']),
-#root > table {
-  width: 80%;
+#root > main,
+#root > header {
+  width: 85%;
   margin: 2em auto 0;
 }
 

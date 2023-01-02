@@ -1,9 +1,8 @@
-import {useContext, useEffect, useState, useCallback, useRef} from 'react'
+import {useContext, useEffect, useState, useMemo} from 'react'
 
-// import SelectRowContext from 'contexts/SelectRowContext'
 import {DataTableContext} from './dataTableContext'
 
-import {Table, LoadingSpinner, ActionBar} from 'components'
+import {Table, LoadingSpinner, ActionBar, Pagination} from 'components'
 import {
   get,
   MEMBERS,
@@ -22,13 +21,13 @@ import {
   NUMBER,
   NO_RECORD,
   API_ERROR,
+  RECORDS_PER_PAGE,
 } from 'utils'
 
 /**
  * This is the main view of the app which contains all of forms, assets and tables.
  */
 function DataTable() {
-  // const [selectedRows] = useContext(SelectRowContext)
   const {typeState, dateState} = useContext(DataTableContext)
   const [type] = typeState
   const [date] = dateState
@@ -38,29 +37,34 @@ function DataTable() {
   const [filteredData, setFilteredData] = useState([])
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState(NO_RECORD)
+  const [currentPage, setCurrentPage] = useState(1)
 
-  const allDataRef = useRef(allData)
-  const filteredDataRef = useRef(filteredData)
-
-  const getLatestData = useCallback(() => {
-    return filteredDataRef.current.length
-      ? filteredDataRef.current
-      : allDataRef.current
-  }, [])
+  const indexOfLastRecord = currentPage * RECORDS_PER_PAGE
+  const indexOfFirstRecord = indexOfLastRecord - RECORDS_PER_PAGE
 
   /**
-   * This useEffect is responsible for Syncing filteredData Ref
+   * Indicates records in pages
    */
-  useEffect(() => {
-    filteredDataRef.current = filteredData
-  }, [filteredData])
+  const currentRecords = useMemo(
+    () =>
+      type || date
+        ? filteredData.slice(indexOfFirstRecord, indexOfLastRecord)
+        : allData.slice(indexOfFirstRecord, indexOfLastRecord),
+    [allData, date, filteredData, indexOfFirstRecord, indexOfLastRecord, type],
+  )
 
   /**
-   * This useEffect is responsible for Syncing allData Ref
+   * Indicates number of pages
    */
-  useEffect(() => {
-    allDataRef.current = allData
-  }, [allData])
+  const nPages = useMemo(
+    () =>
+      Math.ceil(
+        type || date
+          ? filteredData.length / RECORDS_PER_PAGE
+          : allData.length / RECORDS_PER_PAGE,
+      ),
+    [allData.length, date, filteredData.length, type],
+  )
 
   /**
    * This useEffect is responsible for getting data from JSON files.
@@ -143,7 +147,7 @@ function DataTable() {
     return (
       <>
         <ActionBar
-          fetchData={getLatestData}
+          fetchData={allData}
           setFilter={setFilteredData}
           selectOptions={selectOptions}
         />
@@ -157,8 +161,13 @@ function DataTable() {
             {name: ADMITTER_NOTE},
             {name: STATUS},
           ]}
-          rows={!(type || date) ? allData : filteredData}
+          rows={currentRecords}
           message={errorMessage}
+        />
+        <Pagination
+          nPages={nPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
       </>
     )

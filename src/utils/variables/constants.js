@@ -17,6 +17,7 @@ const NUMBER = '#'
 // Numbers
 const MINIMUM_PERIOD = 1
 const DAY_IN_MS = 1000 * 60 * 60 * 24
+const RECORDS_PER_PAGE = 10
 
 // Errors
 const NO_RECORD =
@@ -39,6 +40,7 @@ export {
   ADMITTER_NOTE,
   STATUS,
   NUMBER,
+  RECORDS_PER_PAGE,
   NO_RECORD,
   API_ERROR,
 }
